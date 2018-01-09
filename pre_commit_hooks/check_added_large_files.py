@@ -14,11 +14,15 @@ from pre_commit_hooks.util import cmd_output
 
 
 def lfs_files():
+    default = '{"files":{}}'
     try:
         # Introduced in git-lfs 2.2.0, first working in 2.2.1
         lfs_ret = cmd_output('git', 'lfs', 'status', '--json')
     except CalledProcessError:  # pragma: no cover (with git-lfs)
-        lfs_ret = '{"files":{}}'
+        lfs_ret = default
+    if not lfs_ret:
+        # When lfs_ret is an empty string.
+        lfs_ret = default
 
     return set(json.loads(lfs_ret)['files'])
 
