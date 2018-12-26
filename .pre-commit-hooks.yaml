@@ -264,3 +264,13 @@
     # for backward compatibility
     files: ''
     minimum_pre_commit_version: 0.15.0
+-   id: update-commit-msg
+    name: update-commit-msg
+    entry: python hooks/update_commit_msg.py
+    # Update the regex that needs to match branch name's first part. For e.g if branch name is `XYZ-1234_awesome_change`
+    args: ['--regex=XYZ-[0-9]']
+    language: python
+    stages: [commit-msg]
+    additional_dependencies: ['six', 'invoke']
+    files: .git/COMMIT_EDITMSG<Past
+    description: Auto prepend data to commit-msg, like ticket number etc. Update the regex that needs to match branch name's first part. For e.g if branch name is `XYZ-1234_awesome_change`
